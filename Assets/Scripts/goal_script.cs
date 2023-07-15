@@ -24,7 +24,7 @@ public class goal_script : MonoBehaviour {
 			// set next level
 			Player p = collision.collider.GetComponent<Player>();
 			
-			if (p.GetComponent<Player_Controller>().isActiveAndEnabled && !p.dead){
+			if (p.GetComponent<Player_Controller>().isActiveAndEnabled && !p.dead) {
 			
 				PlayerPrefs.SetInt("current_level",PlayerPrefs.GetInt("current_level") + 1);
 				

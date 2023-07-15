@@ -22,10 +22,8 @@ public class breakable_script : MonoBehaviour {
 
 
 
-	  void OnCollisionEnter(Collision collision)
-    
+	void OnCollisionEnter(Collision collision)
     {
-	
         if (collision.collider.CompareTag ("Explosion"))
         {
            
@@ -35,7 +33,7 @@ public class breakable_script : MonoBehaviour {
 			
 				Instantiate(powerup_prefab, transform.position, Quaternion.identity) ;
 			}
-			 Destroy(gameObject); // 3  
+			Destroy(gameObject); // 3  
         }
     }
 }
