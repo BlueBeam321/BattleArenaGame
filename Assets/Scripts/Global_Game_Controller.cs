@@ -41,8 +41,8 @@ public class Global_Game_Controller : MonoBehaviour {
 		}
 		else
 		{
-			//map = gameObject.AddComponent<Map>();
-			//map.construct(1 + level, 11 + (level - 8) * 2, 11 + (level - 8) * 2, map_parent);
+			map = gameObject.AddComponent<Map>();
+			map.construct(1 + level, 11 + (level - 8) * 2, 11 + (level - 8) * 2, map_parent);
 		}
 	}
 
