@@ -72,7 +72,7 @@ public class Map : MonoBehaviour {
 
         array_representation[1, y_count / 2] = Blocks.Startpos;
 
-        /*if (start_poses > 1) 
+        if (start_poses > 1) 
         {
             new_instance(1, 0, y_count - 2, startpos_prefab);
             array_representation[1, y_count - 2] = Blocks.Startpos;
@@ -106,7 +106,7 @@ public class Map : MonoBehaviour {
         if (start_poses > 7) {
             new_instance(x_count - 2, 0, y_count / 2, startpos_prefab);
             array_representation[x_count - 2, y_count / 2] = Blocks.Startpos;
-        }*/
+        }
 
         for (int x = 0; x < x_count; x++) {
             for (int y = 0; y < y_count; y++) {
@@ -114,20 +114,18 @@ public class Map : MonoBehaviour {
                 new_instance(x, -1, y, floor_prefab);
                 
                 // Create all wall limits 
-                /*if (x == 0 || x == x_count - 1 || y == 0 || y == y_count - 1) {
-                    // add door and goal (only once per map)
+                if (x == 0 || x == x_count - 1 || y == 0 || y == y_count - 1) {
                     if (y == y_count / 2 && x == x_count - 1) {
                         array_representation[x, y] = Blocks.Door;
                         new_instance(x, 0, y, door_prefab);
                         new_instance(x + 1, 0, y, goal_prefab);
-                        // add paper powerup here
                     }
                     else {
                         array_representation[x, y] = Blocks.Wall;
                         new_instance(x, 0, y, wall_prefab);
                     }
                 }
-                else {
+                /*else {
                     // add wall in center of map (random later on!)
                     if (x % 2 == 0 && y % 2 == 0 && x != x_count - 2 && y != y_count - 2) {
                         array_representation[x, y] = Blocks.Wall;

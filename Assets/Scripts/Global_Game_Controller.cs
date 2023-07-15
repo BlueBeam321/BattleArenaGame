@@ -19,28 +19,25 @@ public class Global_Game_Controller : MonoBehaviour {
 		 {
 			switch (t.tag)
 			{
-				case "enemies":
+			case "enemies":
 				enemy_label = t;
 				break;
-				case "level":
+			case "level":
 				level_label = t;
 				break;
 			}
 		 }
 
-
 		// increase map size over maps
 		if (PlayerPrefs.GetInt("current_level").ToString().Length == 0)
 			PlayerPrefs.SetInt("current_level", 1);
 		
-
-		//int level = PlayerPrefs.GetInt("current_level");
-		int level = 1;
+		int level = PlayerPrefs.GetInt("current_level");
 		map =  gameObject.AddComponent<Map>();
 		map.construct(1 + level, 30, 30, map_parent);
 	}
 
-	public void update_labels(){
+	public void update_labels() {
 		int i = 0;
 		foreach (Player a in FindObjectsOfType<Player>()) {
 			if (a.isActiveAndEnabled) {
