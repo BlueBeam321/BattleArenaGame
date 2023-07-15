@@ -8,41 +8,36 @@ public class hide_on_start : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(hide){
-		gameObject.SetActive(false);
-		} else {
-			
+		if (hide)
+			gameObject.SetActive(false);
+		else
 			Time.timeScale = 0;
-		}
 	}
 	
-	public void toggle(){
-		if(gameObject.activeSelf){
+	public void toggle() {
+		if (gameObject.activeSelf)
 			gameObject.SetActive(false);
-		} else {
+		else
 			gameObject.SetActive(true);
-		}
 
 		bool t = false;
-		foreach(hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>()){
-			if(h.isActiveAndEnabled){
+		foreach(hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>()) {
+			if (h.isActiveAndEnabled) {
 				t = true;
 				break;
 			}
-            }
-		if(t){
+        }
+		if (t)
 			Time.timeScale = 0;
-		} else {
+		else
 			Time.timeScale = 1;
-		}
-		
 	}
 
-	public void restart(){
+	public void restart() {
 		Time.timeScale = 1;
 		FindObjectOfType<Global_Game_Controller>().Restart();
 	}
-	public void exit(){
+	public void exit() {
 		Time.timeScale = 1;
 		Application.Quit();
 	}
