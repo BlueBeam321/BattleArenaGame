@@ -113,9 +113,9 @@ public void update_label(POWERUPS powerup){
         }
 
         // init labels
-        if(GetComponent<Player_Controller>().isActiveAndEnabled){
-            foreach(Text t in FindObjectsOfType<Text>()){
-                switch(t.tag){
+        if (GetComponent<Player_Controller>().isActiveAndEnabled) {
+            foreach (Text t in FindObjectsOfType<Text>()) {
+                switch (t.tag) {
                     case "Bomb":
                     bomb_label = t;
                     break;
@@ -171,7 +171,7 @@ public void update_label(POWERUPS powerup){
         if(!respawning){
           lifes--;
         
-        if(GetComponent<Player_Controller>().isActiveAndEnabled){
+        if (GetComponent<Player_Controller>().isActiveAndEnabled) {
         update_label(POWERUPS.LIFE);
         }
           if(lifes <= 0){

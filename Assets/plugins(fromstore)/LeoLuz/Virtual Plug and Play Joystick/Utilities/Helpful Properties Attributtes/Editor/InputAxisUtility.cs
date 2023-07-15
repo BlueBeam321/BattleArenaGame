@@ -9,7 +9,6 @@ using System.Reflection;
 /// </summary>
 public class InputAxes
 {
-
     public static void ReadAxes()
     {
         var inputManager = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/InputManager.asset")[0];

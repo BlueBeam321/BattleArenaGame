@@ -72,12 +72,12 @@ public class Map : MonoBehaviour {
 
         array_representation[1, y_count / 2] = Blocks.Startpos;
 
-        /*if (start_poses > 1) {
+        if (start_poses > 1) {
             new_instance(1, 0, y_count - 2, startpos_prefab);
             array_representation[1, y_count - 2] = Blocks.Startpos;
         }
 
-        if (start_poses > 2) {
+        /*if (start_poses > 2) {
             new_instance(1, 0, 1, startpos_prefab);
             array_representation[1, 1] = Blocks.Startpos;
         }

@@ -30,19 +30,19 @@ public class Global_Game_Controller : MonoBehaviour {
 
 
 		// increase map size over maps
-		if (PlayerPrefs.GetInt("current_level").ToString().Length == 0)
-			PlayerPrefs.SetInt("current_level", 1);
+		//if (PlayerPrefs.GetInt("current_level").ToString().Length == 0)
+		//	PlayerPrefs.SetInt("current_level", 1);
 
-		int level = PlayerPrefs.GetInt("current_level");
-		if (level <= 8)
+		//int level = PlayerPrefs.GetInt("current_level");
+		//if (level <= 8)
 		{
 			map = gameObject.AddComponent<Map>();
-			map.construct(1 + level, 100, 100, map_parent);
+			map.construct(4, 100, 100, map_parent);
 		}
-		else
+		//else
 		{
-			map = gameObject.AddComponent<Map>();
-			map.construct(1 + level, 11 + (level - 8) * 2, 11 + (level - 8) * 2, map_parent);
+			//map = gameObject.AddComponent<Map>();
+			//map.construct(1 + level, 11 + (level - 8) * 2, 11 + (level - 8) * 2, map_parent);
 		}
 	}
 
