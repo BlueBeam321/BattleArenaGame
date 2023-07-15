@@ -12,8 +12,10 @@ public class Player_Controller : Controller
     public bool canMove = true;
     //Can the player move?
 
+    public float launchVelocity = 0.0007f;
     //Prefabs
     public GameObject bombPrefab;
+    public GameObject projectilePrefab;
     //Cached components
     private Rigidbody rigidBody;
     private Transform myTransform;
@@ -94,11 +96,35 @@ public class Player_Controller : Controller
             }
         }
         
-        if (canDropBombs && (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Submit")))
-        {
-            //Drop Bomb. For Player 2's bombs, allow both the numeric enter as the return key or players 
-            //without a numpad will be unable to drop bombs
-            DropBomb();
+
+        // if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit")))
+        // { //Drop Bomb. For Player 2's bombs, allow both the numeric enter as the return key or players 
+        //     //without a numpad will be unable to drop bombs
+          
+        //     DropBomb ();
+            
+        // }
+
+        if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit"))) {
+           GameObject bullet = Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.8f, 0),  
+                                                     transform.rotation);
+            Vector3 direct = new Vector3(0, 0, 0);       
+            Debug.Log("MyTransform : " + myTransform.rotation.eulerAngles);                                              
+            switch (myTransform.rotation.eulerAngles.y) {
+                case 0:
+                    direct = new Vector3(0, 0, 1);
+                    break;
+                case 90:
+                    direct = new Vector3(1, 0, 0);
+                    break;
+                case 180:
+                    direct = new Vector3(0, 0, -1);
+                    break;
+                case 270:
+                    direct = new Vector3(-1, 0, 0);
+                    break;
+            }
+           bullet.GetComponent<Projetile>().Set(transform.position, direct, launchVelocity);
         }
     }
 
