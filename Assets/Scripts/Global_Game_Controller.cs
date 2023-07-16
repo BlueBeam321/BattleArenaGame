@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Threading;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class Global_Game_Controller : MonoBehaviour {
 	private Text level_label;
 	private Text enemy_label;
 	private Text time_label;
+	private float remainingTime;
 
 	public GameObject map_parent;
 	public Map map;
@@ -39,6 +41,18 @@ public class Global_Game_Controller : MonoBehaviour {
 		int level = PlayerPrefs.GetInt("current_level");
 		map =  gameObject.AddComponent<Map>();
 		map.construct(1 + level, 20, 20, map_parent);
+
+		remainingTime = 300;
+	}
+
+	void Update() {
+		if (remainingTime <= 0)
+			remainingTime = 0;
+		if (remainingTime >= 0)
+		{
+			remainingTime -= Time.deltaTime;
+			time_label.text = Mathf.RoundToInt(remainingTime).ToString();
+		}
 	}
 
 	public void update_labels() {
