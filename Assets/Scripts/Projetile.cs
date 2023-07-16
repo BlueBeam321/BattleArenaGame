@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Projetile : MonoBehaviour
 {
-
     public GameObject projectile;
     public float launchVelocity = 700f;
 

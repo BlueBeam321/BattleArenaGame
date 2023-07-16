@@ -69,7 +69,6 @@ public class Map : MonoBehaviour {
         // player start pos
         GameObject t = new_instance(1, 0, y_count / 2 +  (y_count % 2), startpos_prefab);
         t.GetComponent<startpos_script>().player_controller = true;
-
         array_representation[1, y_count / 2] = Blocks.Startpos;
 
         if (start_poses > 1) 
@@ -142,11 +141,11 @@ public class Map : MonoBehaviour {
             } 
         }
 
-        int obstacle_count = x_count * y_count / 4;
+        int obstacle_count = x_count * y_count / 8;
         for (int i = 0; i < obstacle_count; i++) {
             int rx = Random.Range(0, x_count);
             int ry = Random.Range(0, y_count);
-            if (array_representation[rx, ry] == Blocks.Breakable) {
+            if (array_representation[rx, ry] == Blocks.Breakable && !start_next_to(rx, ry)) {
                 int h = Random.Range(1, 5);
                 array_representation[rx, ry] = Blocks.Wall;
                 for (int j = 0; j < h; j++)

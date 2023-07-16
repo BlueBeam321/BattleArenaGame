@@ -5,7 +5,6 @@ using System;
 
 public class Player_Controller : Controller
 {
-
     private string FireAxis = "Fire 1";
 
     public bool canDropBombs = true;
@@ -15,8 +14,9 @@ public class Player_Controller : Controller
 
     public float launchVelocity = 0.0007f;
     //Prefabs
-    public GameObject bombPrefab;
+    //public GameObject bombPrefab;
     public GameObject projectilePrefab;
+    
     //Cached components
     private Rigidbody rigidBody;
     private Transform myTransform;
@@ -44,7 +44,6 @@ public class Player_Controller : Controller
     {
         UpdateMovement ();
     }
-
     
     private void UpdateMovement ()
     {
@@ -99,48 +98,46 @@ public class Player_Controller : Controller
         
 
         // if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit")))
-        // { //Drop Bomb. For Player 2's bombs, allow both the numeric enter as the return key or players 
-        //     //without a numpad will be unable to drop bombs
-          
-        //     DropBomb ();
-            
+        // { //Drop Bomb. For Player 2's bombs, allow both the numeric enter as the return key or players without a NUMPAD will be unable to drop bombs
+        //     dropBomb ();
         // }
 
-        if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit"))) {
-           GameObject bullet = Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.8f, 0),  
-                                                     transform.rotation);
-            Vector3 direct = new Vector3(0, 0, 0);       
-            Debug.Log("MyTransform : " + myTransform.rotation.eulerAngles);                                              
-            switch (myTransform.rotation.eulerAngles.y) {
-                case 0:
-                    direct = new Vector3(0, 0, 1);
-                    break;
-                case 90:
-                    direct = new Vector3(1, 0, 0);
-                    break;
-                case 180:
-                    direct = new Vector3(0, 0, -1);
-                    break;
-                case 270:
-                    direct = new Vector3(-1, 0, 0);
-                    break;
-            }
-           bullet.GetComponent<Projetile>().Set(transform.position, direct, launchVelocity);
-        }
+        if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit")))
+            launchBullet();
     }
 
-     public static float FindDegree(float x, float y)
-     {
+    public static float FindDegree(float x, float y)
+    {
         float value = (float)((Mathf.Atan2(x, y) / Math.PI) * 180f);
         if (value < 0)
             value += 360f;
         return value;
     }
 
-    /// <summary>
-    /// Drops a bomb beneath the player
-    /// </summary>
-    public void DropBomb ()
+    private void launchBullet()
+    {
+        GameObject bullet = Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.8f, 0), transform.rotation);
+        Vector3 direct = new Vector3(0, 0, 0);       
+        Debug.Log("MyTransform : " + myTransform.rotation.eulerAngles);
+        switch (myTransform.rotation.eulerAngles.y)
+        {
+            case 0:
+                direct = new Vector3(0, 0, 1);
+                break;
+            case 90:
+                direct = new Vector3(1, 0, 0);
+                break;
+            case 180:
+                direct = new Vector3(0, 0, -1);
+                break;
+            case 270:
+                direct = new Vector3(-1, 0, 0);
+                break;
+        }
+        bullet.GetComponent<Projetile>().Set(transform.position, direct, launchVelocity);
+    }
+
+    /*private void dropBomb ()
     {
         if (player.bombs != 0)
         {
@@ -158,5 +155,5 @@ public class Player_Controller : Controller
                     go.GetComponent<Rigidbody>().isKinematic = false; // make bomb kickable
             }
         }
-    }
+    }*/
 }

@@ -35,17 +35,16 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    private Text bomb_label;
+    private Text life_label;
+    private Text kick_label;
+    private Text explosion_label;
+    private Text speed_label;
 
-private Text bomb_label;
-private Text life_label;
-private Text kick_label;
-private Text explosion_label;
-private Text speed_label;
-
-public GlobalStateManager globalManager;
+    public GlobalStateManager globalManager;
 
     public float moveSpeed = 5f;
-   
+    
     public ParticleSystem Explosion;
 
     public int bombs = 2;
@@ -59,31 +58,30 @@ public GlobalStateManager globalManager;
 
     private fade_script fade;
 
-
-
-public void update_label(POWERUPS powerup){
-    switch(powerup){
-        case POWERUPS.BOMB:
-        bomb_label.text = bombs.ToString();
-        break;
-        case POWERUPS.KICK:
-        if(canKick){
-        kick_label.text = "1";
-        } else {
-        kick_label.text = "0";
+    public void update_label(POWERUPS powerup)
+    {
+        switch (powerup)
+        {
+            case POWERUPS.BOMB:
+                bomb_label.text = bombs.ToString();
+                break;
+            case POWERUPS.KICK:
+                if (canKick)
+                    kick_label.text = "1";
+                else
+                    kick_label.text = "0";
+                break;
+            case POWERUPS.LIFE:
+                life_label.text = lifes.ToString();
+                break;
+            case POWERUPS.POWER:
+                explosion_label.text = explosion_power.ToString();
+                break;
+            case POWERUPS.SPEED:
+                speed_label.text = moveSpeed.ToString();
+                break;
         }
-        break;
-        case POWERUPS.LIFE:
-        life_label.text = lifes.ToString();
-        break;
-        case POWERUPS.POWER:
-        explosion_label.text = explosion_power.ToString();
-        break;
-        case POWERUPS.SPEED:
-        speed_label.text = moveSpeed.ToString();
-        break;
     }
-}
 
     IEnumerator respawn_wait()
     {
@@ -91,51 +89,50 @@ public void update_label(POWERUPS powerup){
         respawning = false;
     }
 
-  IEnumerator gameover_wait()
+    IEnumerator gameover_wait()
     {
-    
-        
-         yield return new WaitForSeconds(1f);
-            show_gameover_panel();
-
+        yield return new WaitForSeconds(1f);
+        show_gameover_panel();
     }
 
     // Use this for initialization
     void Start ()
     {
         // init fader
-        foreach(fade_script f in FindObjectsOfType<fade_script>()){
-            if(f.tag == "fader"){
+        foreach(fade_script f in FindObjectsOfType<fade_script>())
+        {
+            if (f.tag == "fader")
                 continue;
-            } else {
+            else
                 fade = f;
-            }
         }
 
         // init labels
-        if (GetComponent<Player_Controller>().isActiveAndEnabled) {
-            foreach (Text t in FindObjectsOfType<Text>()) {
-                switch (t.tag) {
+        if (GetComponent<Player_Controller>().isActiveAndEnabled)
+        {
+            foreach (Text t in FindObjectsOfType<Text>())
+            {
+                switch (t.tag)
+                {
                     case "Bomb":
-                    bomb_label = t;
-                    break;
+                        bomb_label = t;
+                        break;
                     case "life":
-                    life_label = t;
-                    break;
+                        life_label = t;
+                        break;
                     case "power":
-                    explosion_label = t;
-                    break;
+                        explosion_label = t;
+                        break;
                     case "speed":
-                    speed_label = t;
-                    break;
+                        speed_label = t;
+                        break;
                     case "kick":
-                    kick_label = t;
-                    break;
+                        kick_label = t;
+                        break;
                 }
             }
         }
         //Cache the attached components for better performance and less typing
-
     }
 
     IEnumerator dmg_animation(){
