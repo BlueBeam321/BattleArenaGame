@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class powerup_script : MonoBehaviour
 {
-	public GameObject bomb;
-	public GameObject kick;
 	public GameObject life;
-	public GameObject power;
-	public GameObject speed;
 
 	private GameObject text;
 	private GameObject curr;
@@ -18,25 +14,13 @@ public class powerup_script : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		powerup = (POWERUPS)Random.Range(0, 5);
+		powerup = (POWERUPS)Random.Range(0, 6);
 
 		// load prefab look
 		switch (powerup)
 		{
-			case POWERUPS.BOMB:
-				curr = bomb;
-				break;
-			case POWERUPS.KICK:
-				curr = kick;
-				break;
 			case POWERUPS.LIFE:
 				curr = life;
-				break;
-			case POWERUPS.POWER:
-				curr = power;
-				break;
-			case POWERUPS.SPEED:
-				curr = speed;
 				break;
 		}
 			// curr position
@@ -56,25 +40,9 @@ public class powerup_script : MonoBehaviour
 			string s = "";
 			switch (powerup)
 			{
-				case POWERUPS.BOMB:
-					s = "+1 Bomb";
-					player.bombs++;
-					break;
-				case POWERUPS.KICK:
-					player.canKick = true;
-					s = "Kick unlocked";
-					break;
 				case POWERUPS.LIFE:
 					player.lifes++;
 					s = "+1 Life";
-					break;
-				case POWERUPS.POWER:
-					player.explosion_power++;
-					s = "+1 explosive power";
-					break;
-				case POWERUPS.SPEED:
-					player.moveSpeed++;
-					s = "+1 Speed";
 					break;
 			}
 		

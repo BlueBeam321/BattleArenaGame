@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class start_text_script : MonoBehaviour {
-
-
 	private Text text;
 
 	// Use this for initialization

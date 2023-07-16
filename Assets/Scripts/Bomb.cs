@@ -37,7 +37,6 @@ public class Bomb : MonoBehaviour
         exploded = true; 
         transform.Find("Collider").gameObject.SetActive(false); //3
         Destroy(gameObject, .3f); //4
-        player.bombs++;
     }
 
     private Vector3 Round(Vector3 v)

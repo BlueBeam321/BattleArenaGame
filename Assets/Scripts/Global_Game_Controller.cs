@@ -6,17 +6,18 @@ using UnityEngine.UI;
 public class Global_Game_Controller : MonoBehaviour {
 	private Text level_label;
 	private Text enemy_label;
+	private Text time_label;
 
 	public GameObject map_parent;
 	public Map map;
 
 	// Use this for initialization
 	void Start () {
-		 Application.targetFrameRate = 30;
+		Application.targetFrameRate = 30;
 
 		// init labels
-		 foreach (Text t in FindObjectsOfType<Text>())
-		 {
+		foreach (Text t in FindObjectsOfType<Text>())
+		{
 			switch (t.tag)
 			{
 			case "enemies":
@@ -25,8 +26,11 @@ public class Global_Game_Controller : MonoBehaviour {
 			case "level":
 				level_label = t;
 				break;
+			case "time":
+				time_label = t;
+				break;
 			}
-		 }
+		}
 
 		// increase map size over maps
 		if (PlayerPrefs.GetInt("current_level").ToString().Length == 0)
@@ -40,23 +44,20 @@ public class Global_Game_Controller : MonoBehaviour {
 	public void update_labels() {
 		int i = 0;
 		foreach (Player a in FindObjectsOfType<Player>()) {
-			if (a.isActiveAndEnabled) {
+			if (a.isActiveAndEnabled)
 				i++;
-			}
 		}
 
 		if (i <= 1) {
-			if (FindObjectOfType<door_script>()) {
+			if (FindObjectOfType<door_script>())
 				Destroy(FindObjectOfType<door_script>().gameObject);
-			}
 		}
 
-		if (i > 0) {
+		if (i > 0)
 			i-= 1;
-		}
 
 		enemy_label.text = (i).ToString();
-		// level_label.text = PlayerPrefs.GetInt("current_level").ToString();
+		level_label.text = PlayerPrefs.GetInt("current_level").ToString();
 	}
 
 	public void Restart() {
@@ -64,12 +65,10 @@ public class Global_Game_Controller : MonoBehaviour {
 		fade_script fade = new fade_script();
 		// init fader
         foreach (fade_script f in FindObjectsOfType<fade_script>()) {
-            if (f.tag == "fader") {
+            if (f.tag == "fader")
                fade = f;
-            }
-			else {
+			else
                continue;
-            }
         }
 		
 		// reset values

@@ -6,16 +6,7 @@ using UnityEngine.UI;
 
 public class Player_Controller : Controller
 {
-    private string FireAxis = "Fire 1";
-
-    public bool canDropBombs = true;
-    //Can the player drop bombs?
-    public bool canMove = true;
-    //Can the player move?
-
     public float launchVelocity = 0.0007f;
-    //Prefabs
-    //public GameObject bombPrefab;
     public GameObject projectilePrefab;
     
     //Cached components
@@ -68,9 +59,6 @@ public class Player_Controller : Controller
         UpdatePlayer2Movement ();
     }
 
-    /// <summary>
-    /// Updates Player 2's movement and facing rotation using the arrow keys and drops bombs using Enter or Return
-    /// </summary>
     private void UpdatePlayer2Movement ()
     {
         if (Input.GetButton("Up")) //Up movement
@@ -113,13 +101,7 @@ public class Player_Controller : Controller
             }
         }
         
-
-        // if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit")))
-        // { //Drop Bomb. For Player 2's bombs, allow both the numeric enter as the return key or players without a NUMPAD will be unable to drop bombs
-        //     dropBomb ();
-        // }
-
-        if (canDropBombs && (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit")))
+        if (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return) || Input.GetButtonDown("Submit"))
 		{
             GameObject bullet = Instantiate(projectilePrefab, transform.position + new Vector3(0, 1.8f, 0), transform.rotation);
             Vector3 direct = new Vector3(0, 0, 0);       
@@ -150,24 +132,4 @@ public class Player_Controller : Controller
  
      	return value;
     }
-	
-    /*private void dropBomb ()
-    {
-        if (player.bombs != 0)
-        {
-           player.bombs--;
-            if (bombPrefab)
-            {
-                //Check if bomb prefab is assigned first
-                GameObject go = Instantiate(bombPrefab, 
-                    new Vector3(Mathf.RoundToInt(myTransform.position.x), bombPrefab.transform.position.y, Mathf.RoundToInt(myTransform.position.z)),
-                    bombPrefab.transform.rotation);
-
-                go.GetComponent<Bomb>().explode_size = player.explosion_power;
-                go.GetComponent<Bomb>().player = player;
-                if (player.canKick)
-                    go.GetComponent<Rigidbody>().isKinematic = false; // make bomb kickable
-            }
-        }
-    }*/
 }

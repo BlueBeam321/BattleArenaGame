@@ -145,7 +145,7 @@ public class Map : MonoBehaviour {
             int rx = Random.Range(0, x_count);
             int ry = Random.Range(0, y_count);
             if (array_representation[rx, ry] == Blocks.Breakable && !start_next_to(rx, ry)) {
-                int h = Random.Range(1, 5);
+                int h = Random.Range(1, 4);
                 array_representation[rx, ry] = Blocks.Wall;
                 for (int j = 0; j < h; j++)
                     new_instance(rx, j, ry, wall_prefab);

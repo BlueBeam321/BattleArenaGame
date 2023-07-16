@@ -1,4 +1,4 @@
-public enum POWERUPS{
-    LIFE, BOMB, SPEED, KICK, POWER
-
+public enum POWERUPS
+{
+    LEVEL, LIFE, DIED, ENEMY, TIME
 }

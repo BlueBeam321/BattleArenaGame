@@ -11,7 +11,6 @@ public class Ai_Controller : Controller
 
     private AI_STATES state = AI_STATES.IDLE;
 
-    private Vector3 next_pos;
     private Vector3 next_dir;   
     private ArrayList path = new ArrayList();
     private struct dir_dist {
@@ -37,9 +36,6 @@ public class Ai_Controller : Controller
         animator.SetBool ("Walking", false);
         switch (state)
         {
-            case AI_STATES.DODGE: // Move away from Bomb
-                move(next_dir, next_pos);
-                break;
             case AI_STATES.CENTER: // center to tile
                 move(next_dir, Round(transform.position));
                 break;
@@ -246,7 +242,6 @@ public class Ai_Controller : Controller
     private void move_path()
     {
         // Move along a path of vector3
-        // always do checks for bombs on the way and avoid
         if (path.Count != 0)
         {
             Vector3 direction =  ((Vector3)path[0] - Round(transform.position)).normalized;
@@ -296,9 +291,6 @@ public class Ai_Controller : Controller
             {
                 if (d.dist < 10)
                 {
-                    print("Collision direction: " + d.dir);
-                    print("Position: " + transform.position);
-                    print("Rotation: " + transform.rotation);
                     if (d.dir == Vector3.forward)
                         transform.rotation = Quaternion.Euler(0, 0, 0);
                     else if (d.dir == Vector3.back)
@@ -333,24 +325,8 @@ public class Ai_Controller : Controller
                 direct = new Vector3(-1, 0, 0);
                 break;
         }
-        //Debug.Log("Bot: Launching bullet: Position=(" + transform.position.x + ", " + transform.position.z + "), " +
-        //    "Direct=(" + direct.x + ", " + direct.z + "), " + 
-        //    "Velocity=" + launchVelocity);
         bullet.GetComponent<Projetile>().Set(transform.position + direct / 2.0f, direct, launchVelocity);
     }
-
-    /*private void dropBomb() {
-        if (bombPrefab) { //Check if Bomb prefab is assigned first
-            GameObject bomb = Instantiate(bombPrefab, 
-                new Vector3(Mathf.RoundToInt(transform.position.x), bombPrefab.transform.position.y, Mathf.RoundToInt(transform.position.z)),
-                bombPrefab.transform.rotation);
-
-            wait_bombs.Add(bomb);
-
-            bomb.GetComponent<Bomb>().explode_size = player.explosion_power;
-            bomb.GetComponent<Bomb>().player = player;
-        }
-    }*/
 
     private int amount_usable_paths(ArrayList detections) {
         int i = 0;
