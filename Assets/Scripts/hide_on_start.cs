@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class hide_on_start : MonoBehaviour {
-
 	public bool hide = true;
+
+	public Text message;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +16,30 @@ public class hide_on_start : MonoBehaviour {
 	}
 	
 	public void toggle() {
+
+		if (gameObject.activeSelf)
+			gameObject.SetActive(false);
+		else
+			gameObject.SetActive(true);
+
+		bool t = false;
+		foreach(hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>()) {
+			if (h.isActiveAndEnabled) {
+				t = true;
+				break;
+			}
+        }
+		if (t)
+			Time.timeScale = 0;
+		else
+			Time.timeScale = 1;
+	}
+
+	public void toggle_gameover(int myscore, List<int> enemyscores) {
+		if (gameObject.tag == "gameover") {
+			message.GetComponent<Text>().text += "My Dead: " + myscore.ToString();
+		}
+
 		if (gameObject.activeSelf)
 			gameObject.SetActive(false);
 		else
@@ -38,6 +63,7 @@ public class hide_on_start : MonoBehaviour {
 		FindObjectOfType<Global_Game_Controller>().Restart();
 	}
 	public void exit() {
+		print("Exit...");
 		Time.timeScale = 1;
 		Application.Quit();
 	}

@@ -8,7 +8,7 @@ public class start_text_script : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		text = GetComponent<Text>();
-		text.text = "LEVEL " + PlayerPrefs.GetInt("current_level").ToString();
+		text.text = "S T A R T";//"LEVEL " + PlayerPrefs.GetInt("current_level").ToString();
 	}
 	
 	// Update is called once per frame

@@ -9,9 +9,13 @@ public class Global_Game_Controller : MonoBehaviour {
 	private Text enemy_label;
 	private Text time_label;
 	private float remainingTime;
+	private bool gameRunning;
 
 	public GameObject map_parent;
 	public Map map;
+
+	int myscore;
+	List<int> enemyscore = new List<int>();
 
 	// Use this for initialization
 	void Start () {
@@ -38,20 +42,50 @@ public class Global_Game_Controller : MonoBehaviour {
 		if (PlayerPrefs.GetInt("current_level").ToString().Length == 0)
 			PlayerPrefs.SetInt("current_level", 1);
 		
-		int level = PlayerPrefs.GetInt("current_level");
+		int level = 1;//PlayerPrefs.GetInt("current_level");
 		map =  gameObject.AddComponent<Map>();
 		map.construct(1 + level, 20, 20, map_parent);
 
-		remainingTime = 300;
+		remainingTime = 5 * 60;
+		gameRunning = true;
 	}
 
+	IEnumerator gameover_wait()
+    {
+        yield return new WaitForSeconds(1f);
+        show_gameover_panel();
+    }
+
+	private void show_gameover_panel()
+    {
+        foreach (hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>())
+        {
+            if (h.tag == "gameover")
+            {
+                h.toggle_gameover(myscore, enemyscore);
+                break;
+            }
+        }
+    }
+
 	void Update() {
-		if (remainingTime <= 0)
-			remainingTime = 0;
-		if (remainingTime >= 0)
+		if (remainingTime < 0 && gameRunning) {
+			foreach (Player a in FindObjectsOfType<Player>()) {
+				if (a.GetComponent<Player_Controller>().isActiveAndEnabled) {
+					myscore = a.killed;
+				} else {
+					enemyscore.Add(a.killed);
+				}
+				Destroy(a.gameObject);
+			}
+			StartCoroutine(gameover_wait());
+			gameRunning = false;
+		}
+
+		if (remainingTime >= 0 && gameRunning)
 		{
 			remainingTime -= Time.deltaTime;
-			time_label.text = Mathf.RoundToInt(remainingTime).ToString();
+			time_label.text = Mathf.RoundToInt(remainingTime).ToString() + " sec";
 		}
 	}
 
@@ -71,7 +105,8 @@ public class Global_Game_Controller : MonoBehaviour {
 			i-= 1;
 
 		enemy_label.text = (i).ToString();
-		level_label.text = PlayerPrefs.GetInt("current_level").ToString();
+		if (level_label)
+			level_label.text = PlayerPrefs.GetInt("current_level").ToString();
 	}
 
 	public void Restart() {

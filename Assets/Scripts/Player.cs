@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     private Text life_label;
+    private Text died_label;
 
     public GlobalStateManager globalManager;
 
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour
 
     public int lifes = 100;
     public bool dead = false;
+
+    public int killed = 0;
     public bool respawning = false;
 
     private fade_script fade;
@@ -26,12 +29,16 @@ public class Player : MonoBehaviour
             case POWERUPS.LIFE:
                 life_label.text = lifes.ToString();
                 break;
+
+            case POWERUPS.DIED:
+                died_label.text = killed.ToString();
+                break;
         }
     }
 
     IEnumerator respawn_wait()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         respawning = false;
     }
 
@@ -63,6 +70,9 @@ public class Player : MonoBehaviour
                     case "life":
                         life_label = t;
                         break;
+                    case "died":
+                        died_label = t;
+                        break;
                 }
             }
         }
@@ -83,15 +93,15 @@ public class Player : MonoBehaviour
 
     private void show_gameover_panel()
     {
-        foreach (hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>())
-        {
-            if (h.tag == "gameover")
-            {
-                h.toggle();
-                break;
-            }
-        }
-        Destroy(gameObject);
+        // foreach (hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>())
+        // {
+        //     if (h.tag == "gameover")
+        //     {
+        //         h.toggle();
+        //         break;
+        //     }
+        // }
+        // Destroy(gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -112,15 +122,21 @@ public class Player : MonoBehaviour
                 dead = true; // 1
                 if (GetComponent<Player_Controller>().isActiveAndEnabled)
 				{     
-                    StartCoroutine(gameover_wait());
+                    killed ++;
+                    update_label(POWERUPS.DIED);
+                    // StartCoroutine(gameover_wait());
                     StartCoroutine(dmg_animation());
                 }
 				else
 				{
-                    Destroy(gameObject);
+                    // Destroy(gameObject);
                     FindObjectOfType<Global_Game_Controller>().update_labels();
                 }
-                Instantiate(Explosion, transform.position, Quaternion.identity);
+                
+                respawning = true;
+                lifes = 100;
+                StartCoroutine(respawn_wait());
+                // Instantiate(Explosion, transform.position, Quaternion.identity);
             }
         }
     }
