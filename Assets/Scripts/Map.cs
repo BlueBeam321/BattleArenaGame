@@ -73,7 +73,7 @@ public class Map : MonoBehaviour {
 
         if (start_poses > 1) 
         {
-            new_instance(1, 0, y_count - 2, startpos_prefab);
+            new_instance(1, 0, y_count / 2, startpos_prefab);
             array_representation[1, y_count - 2] = Blocks.Startpos;
         }
 

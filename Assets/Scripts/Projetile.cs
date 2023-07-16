@@ -27,7 +27,7 @@ public class Projetile : MonoBehaviour
         transform.position = firePos + direction * speed * timeElapsed / 100.0f;
         // transform.position += Physics.gravity * (timeElapsed * timeElapsed) / 2.0f;
         // extra validation for cleaning the scene
-        if (timeElapsed > 100.0f)
+        if (timeElapsed > 10.0f)
             Destroy(this.gameObject);// or set = false; and hide it
     }
 

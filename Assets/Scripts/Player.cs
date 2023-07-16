@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     //Amount of bombs the player has left to drop, gets decreased as the player
     //drops a bomb, increases as an owned bomb explodes
     public bool canKick = false;
-    public int lifes = 1;
+    public int lifes = 100;
     public int explosion_power = 2;
     public bool dead = false;
     public bool respawning = false;
@@ -60,6 +60,7 @@ public class Player : MonoBehaviour
 
     public void update_label(POWERUPS powerup)
     {
+        Debug.Log("Player Update Label");
         switch (powerup)
         {
             case POWERUPS.BOMB:
@@ -148,55 +149,48 @@ public class Player : MonoBehaviour
       
     }
 
-    private void show_gameover_panel(){
-        foreach(hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>()){
-      
-                if(h.tag == "gameover"){
-            h.toggle();
-            break;
-                }
+    private void show_gameover_panel()
+    {
+        foreach (hide_on_start h in Resources.FindObjectsOfTypeAll<hide_on_start>())
+        {
+            if (h.tag == "gameover")
+            {
+                h.toggle();
+                break;
             }
-             Destroy(gameObject);
+        }
+        Destroy(gameObject);
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        
-        if (collision.collider.CompareTag ("Explosion"))
+        if (collision.collider.CompareTag ("bullet"))
         {
-
-        if(!respawning){
-          lifes--;
-        
-        if (GetComponent<Player_Controller>().isActiveAndEnabled) {
-        update_label(POWERUPS.LIFE);
-        }
-          if(lifes <= 0){
-            dead = true; // 1
-            if(GetComponent<Player_Controller>().isActiveAndEnabled){     
-               
-                StartCoroutine(gameover_wait());
-            } else {
-               
-                Destroy(gameObject);
-                 FindObjectOfType<Global_Game_Controller>().update_labels();
+            lifes = lifes - 20;
+            Debug.Log(tag + " collision : " +  collision.collider.tag + lifes);
+            if (GetComponent<Player_Controller>().isActiveAndEnabled) {
+                update_label(POWERUPS.LIFE);
             }
-            // 3 
-            
-            
-            } else {
-                if(GetComponent<Player_Controller>().isActiveAndEnabled){
-                StartCoroutine(dmg_animation());
-                } else {
-                   
+
+            if (lifes <= 0)
+			{
+                dead = true; // 1
+                if (GetComponent<Player_Controller>().isActiveAndEnabled)
+				{     
+                    StartCoroutine(gameover_wait());
+                    StartCoroutine(dmg_animation());
                 }
-            respawning = true;
-            StartCoroutine(respawn_wait());
-             }
-             
-            Instantiate(Explosion,transform.position, Quaternion.identity);
-         
-        }
+				else
+				{
+                    Destroy(gameObject);
+                    FindObjectOfType<Global_Game_Controller>().update_labels();
+                }
+
+                // respawning = true;
+                // StartCoroutine(respawn_wait());
+
+                Instantiate(Explosion,transform.position, Quaternion.identity);
+            }
         }
     }
 }
