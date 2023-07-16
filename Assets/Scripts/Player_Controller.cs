@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.UI;
 
 public class Player_Controller : Controller
 {
@@ -23,6 +24,16 @@ public class Player_Controller : Controller
     private Animator animator;
     private Player player;
     private bool mobile;
+    private Transform caption;
+
+    [SerializeField]
+    private Text _Caption;
+
+    [SerializeField]
+    private Canvas _CaptionCanvas;
+
+    [SerializeField]
+    private Vector3 _TestVector;
 
     // Use this for initialization
     void Start ()
@@ -39,7 +50,12 @@ public class Player_Controller : Controller
         animator = myTransform.Find("PlayerModel").GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+  
+    public void UpdateCaption(string caption) {
+        _Caption.GetComponent<Text>().text = caption;
+    }
+
+  // Update is called once per frame
     void Update ()
     {
         UpdateMovement ();
@@ -84,6 +100,7 @@ public class Player_Controller : Controller
             myTransform.rotation = Quaternion.Euler(0, 90, 0);
             animator.SetBool("Walking", true);
         }
+        _CaptionCanvas.transform.eulerAngles =  new Vector3(0,0,0);
 
         if (mobile)
         {
