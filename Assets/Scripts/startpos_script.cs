@@ -16,7 +16,7 @@ public class startpos_script : MonoBehaviour {
 			temp_prefab.GetComponent<Player_Controller>().enabled = false; // disable Player Controller
 			
 			FindObjectOfType<Global_Game_Controller>().update_labels();
-			temp_prefab.GetComponent<Ai_Controller>().move_mode = (AI_MOVE_MODE)Random.Range(0, 3);
+			temp_prefab.GetComponent<Ai_Controller>().moveMode = AI_MOVE_MODE.ASTAR;//(AI_MOVE_MODE)Random.Range(0, 4);
 		}
 		else
 		{

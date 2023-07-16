@@ -34,7 +34,7 @@ public class Global_Game_Controller : MonoBehaviour {
 		
 		int level = PlayerPrefs.GetInt("current_level");
 		map =  gameObject.AddComponent<Map>();
-		map.construct(1 + level, 100, 100, map_parent);
+		map.construct(1 + level, 20, 20, map_parent);
 	}
 
 	public void update_labels() {

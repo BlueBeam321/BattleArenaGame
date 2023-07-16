@@ -166,7 +166,6 @@ public class Player : MonoBehaviour
     {
         if (collision.collider.CompareTag ("bullet"))
         {
-            GetComponent<Player_Controller>().UpdateCaption("HP : " + lifes.ToString());
             lifes = lifes - 20;
             Debug.Log(tag + " collision : " +  collision.collider.tag + lifes);
             if (GetComponent<Player_Controller>().isActiveAndEnabled) {

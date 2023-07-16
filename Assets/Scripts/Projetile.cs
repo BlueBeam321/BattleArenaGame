@@ -5,7 +5,6 @@ using UnityEngine;
 public class Projetile : MonoBehaviour
 {
     public GameObject projectile;
-    public float launchVelocity = 700f;
 
     private bool set = false;
     private Vector3 firePos;
@@ -24,6 +23,7 @@ public class Projetile : MonoBehaviour
         if (!set)
             return;
         timeElapsed += Time.deltaTime;
+        //print("Bullet direction : " + direction);
         transform.position = firePos + direction * speed * timeElapsed / 100.0f;
         // transform.position += Physics.gravity * (timeElapsed * timeElapsed) / 2.0f;
         // extra validation for cleaning the scene
@@ -31,7 +31,7 @@ public class Projetile : MonoBehaviour
             Destroy(this.gameObject);// or set = false; and hide it
     }
 
-    public void Set (Vector3 firePos, Vector3 direction, float speed)
+    public void Set(Vector3 firePos, Vector3 direction, float speed)
     {
         this.firePos = firePos;
         this.direction = direction.normalized;
