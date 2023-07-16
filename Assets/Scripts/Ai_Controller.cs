@@ -536,7 +536,7 @@ public class Ai_Controller : Controller
             }
             counter++;    
 
-            // get position with highest potential    
+            // get position with highest potential
             foreach (dir_dist d in curr_det) {
                 if (d.path_value > temp.path_value) {
                     temp = d;
