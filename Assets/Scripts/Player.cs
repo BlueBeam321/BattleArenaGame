@@ -14,11 +14,10 @@ public class Player : MonoBehaviour
     
     public ParticleSystem Explosion;
 
-    public int lifes = 100;
-    public bool dead = false;
+    public int health = 100;
 
-    public int killed = 0;
-    public bool respawning = false;
+    public int died = 0;
+    //public bool respawning = false;
 
     private fade_script fade;
 
@@ -27,20 +26,20 @@ public class Player : MonoBehaviour
         switch (powerup)
         {
             case POWERUPS.LIFE:
-                life_label.text = lifes.ToString();
+                life_label.text = health.ToString();
                 break;
 
             case POWERUPS.DIED:
-                died_label.text = killed.ToString();
+                died_label.text = died.ToString();
                 break;
         }
     }
 
-    IEnumerator respawn_wait()
+    /*IEnumerator respawn_wait()
     {
         yield return new WaitForSeconds(5);
         respawning = false;
-    }
+    }*/
 
     IEnumerator gameover_wait()
     {
@@ -108,35 +107,39 @@ public class Player : MonoBehaviour
     {
         if (collision.collider.CompareTag ("bullet"))
         {
-            GetComponent<Player_Controller>().UpdateCaption("HP : " + lifes.ToString());
-            lifes = lifes - 20;
-            if (lifes < 0)
-                lifes = 0;
+            GetComponent<Player_Controller>().UpdateCaption("HP : " + health.ToString());
+            health = health - 20;
+            if (health < 0)
+                health = 0;
             
-            //Debug.Log(tag + " collision : " +  collision.collider.tag + lifes);
+            //Debug.Log(tag + " collision : " +  collision.collider.tag + health);
             if (GetComponent<Player_Controller>().isActiveAndEnabled)
                 update_label(POWERUPS.LIFE);
 
-            if (lifes <= 0)
+            if (health <= 0)
 			{
-                dead = true; // 1
+                bool enemy = true;
                 if (GetComponent<Player_Controller>().isActiveAndEnabled)
-				{     
-                    killed ++;
+				{
+                    enemy = false;
+                    died++;
                     update_label(POWERUPS.DIED);
                     // StartCoroutine(gameover_wait());
                     StartCoroutine(dmg_animation());
                 }
-				else
+				/*else
 				{
-                    // Destroy(gameObject);
+                    Destroy(gameObject);
                     FindObjectOfType<Global_Game_Controller>().update_labels();
-                }
+                }*/
+
+                health = 100;
+                Destroy(gameObject);
+                FindObjectOfType<Global_Game_Controller>().GetComponent<Map>().generate_player(enemy);
                 
-                respawning = true;
-                lifes = 100;
-                StartCoroutine(respawn_wait());
-                // Instantiate(Explosion, transform.position, Quaternion.identity);
+                //respawning = true;
+                //StartCoroutine(respawn_wait());
+                Instantiate(Explosion, transform.position, Quaternion.identity);
             }
         }
     }

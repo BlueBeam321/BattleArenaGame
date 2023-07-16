@@ -15,15 +15,12 @@ public class goal_script : MonoBehaviour {
 		
 	}
 
-	
-
 	void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag ("Player"))
+        if (collision.collider.CompareTag("Player"))
         {
 			// set next level
-			Player p = collision.collider.GetComponent<Player>();
-			
+			/*Player p = collision.collider.GetComponent<Player>();
 			if (p.GetComponent<Player_Controller>().isActiveAndEnabled && !p.dead) {
 			
 				PlayerPrefs.SetInt("current_level",PlayerPrefs.GetInt("current_level") + 1);
@@ -47,9 +44,9 @@ public class goal_script : MonoBehaviour {
 				{
 					StartCoroutine(GameObject.FindObjectOfType<fade_script>().FadeAndLoadScene(fade_script.FadeDirection.In, "Game"));
 				} else {
-						StartCoroutine(GameObject.FindObjectOfType<fade_script>().FadeAndLoadScene(fade_script.FadeDirection.In, "Game_mobile"));
+					StartCoroutine(GameObject.FindObjectOfType<fade_script>().FadeAndLoadScene(fade_script.FadeDirection.In, "Game_mobile"));
 				}
-			}
+			}*/
         }
     }
 }

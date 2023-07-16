@@ -10,7 +10,7 @@ public class startpos_script : MonoBehaviour {
 	{
 		if (!player_controller)
 		{
-		    player_prefab = (GameObject) Resources.Load("Enemy", typeof(GameObject));
+		    player_prefab = (GameObject)Resources.Load("Enemy", typeof(GameObject));
 
 			GameObject temp_prefab = Instantiate(player_prefab, transform.position, Quaternion.identity) ; // create new prefab instance
 			temp_prefab.GetComponent<Player_Controller>().enabled = false; // disable Player Controller
@@ -20,7 +20,7 @@ public class startpos_script : MonoBehaviour {
 		}
 		else
 		{
-			player_prefab = (GameObject) Resources.Load("Player", typeof(GameObject));
+			player_prefab = (GameObject)Resources.Load("Player", typeof(GameObject));
 
 		 	GameObject temp_prefab = Instantiate(player_prefab, transform.position, Quaternion.identity) ; // create new prefab instance 
 			temp_prefab.GetComponent<Ai_Controller>().enabled = false; // Disable AI Controller

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class Dijkstra
 {
-    public static ArrayList FindPath(Map map, Vector3 start, Vector3 goal)
+    public static ArrayList FindPath(Map map, Vector3 start, Vector3 end)
     {
         List<Vector3> unvisitedNodes = new List<Vector3>();
         Dictionary<Vector3, Vector3> cameFrom = new Dictionary<Vector3, Vector3>();
@@ -25,7 +25,7 @@ public static class Dijkstra
         while (unvisitedNodes.Count > 0)
         {
             Vector3 current = GetLowestDistanceNode(distance, unvisitedNodes);
-            if (current == goal)
+            if (current == end)
                 return ReconstructPath(cameFrom, current);
 
             unvisitedNodes.Remove(current);

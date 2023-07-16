@@ -59,7 +59,7 @@ public class Ai_Controller : Controller
                     {
                         if (d.tag == "powerup")
                         {
-                            path.Clear(); // currently removes the goal, maybe not the smartest idea
+                            path.Clear();
                             path.Add(transform.position + d.dir);
                             state = AI_STATES.FOLLOW;
                             break;
@@ -74,10 +74,8 @@ public class Ai_Controller : Controller
                     break;
                 }
                 
-                //4 Set a ai goal, a position the bot will try to reach
                 if (path == null || path.Count == 0)
                 {
-                    // ready for next goal
                     Map map = FindObjectOfType<Global_Game_Controller>().map;
                     switch (moveMode)
                     {
@@ -122,11 +120,7 @@ public class Ai_Controller : Controller
                 else
                 {
                     if (Vector3.Distance(transform.position, (Vector3)path[0]) > 1)
-                    {
-                        // this means we have dodged a Bomb and don't have a continuous path to goal
-                        // we should update path, but i will clear for now
                         path.Clear();
-                    }
                     else
                     {
                         state = AI_STATES.FOLLOW;
@@ -141,9 +135,9 @@ public class Ai_Controller : Controller
         }
     }
 
-    private ArrayList calculate_path_to(Map map, Vector3 startPos, Vector3 goal)
+    private ArrayList calculate_path_to(Map map, Vector3 startPos, Vector3 targetPos)
     {
-        // calculate a path between current pos and goal,
+        // calculate a path between current pos and target pos,
         // save as ArrayList
         bool done = false;
         ArrayList result = new ArrayList();
@@ -152,7 +146,7 @@ public class Ai_Controller : Controller
 
         while (!done)
         {
-            if (curPos == goal)
+            if (curPos == targetPos)
             {
                 done = true;
                 continue;
@@ -163,8 +157,8 @@ public class Ai_Controller : Controller
                 Vector3 temp_pos = Round(curPos + d.dir);
                 if (map.is_walkable((int)temp_pos.x, (int)temp_pos.z))
                 {
-                    if (Math.Abs(goal.x - temp_pos.x) < Math.Abs(goal.x - curPos.x) || 
-                        Math.Abs(goal.z - temp_pos.z) < Math.Abs(goal.z - curPos.z))
+                    if (Math.Abs(targetPos.x - temp_pos.x) < Math.Abs(targetPos.x - curPos.x) || 
+                        Math.Abs(targetPos.z - temp_pos.z) < Math.Abs(targetPos.z - curPos.z))
                     {
                         result.Add(curPos);
                         curPos = temp_pos;

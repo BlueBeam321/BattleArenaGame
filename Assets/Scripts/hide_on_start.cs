@@ -35,9 +35,9 @@ public class hide_on_start : MonoBehaviour {
 			Time.timeScale = 1;
 	}
 
-	public void toggle_gameover(int myscore, List<int> enemyscores) {
+	public void toggle_gameover(int myScore, List<int> enemyscores) {
 		if (gameObject.tag == "gameover") {
-			message.GetComponent<Text>().text += "My Dead: " + myscore.ToString();
+			message.GetComponent<Text>().text += "My Dead: " + myScore.ToString();
 		}
 
 		if (gameObject.activeSelf)

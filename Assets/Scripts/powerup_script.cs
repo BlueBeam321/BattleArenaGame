@@ -41,7 +41,7 @@ public class powerup_script : MonoBehaviour
 			switch (powerup)
 			{
 				case POWERUPS.LIFE:
-					player.lifes++;
+					player.health++;
 					s = "+1 Life";
 					break;
 			}

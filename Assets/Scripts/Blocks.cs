@@ -1,3 +1,3 @@
 public enum Blocks{
-    Breakable, Door, Wall, Goal, Startpos
+    Breakable, Wall, StartPos
 }

@@ -14,8 +14,8 @@ public class Global_Game_Controller : MonoBehaviour {
 	public GameObject map_parent;
 	public Map map;
 
-	int myscore;
-	List<int> enemyscore = new List<int>();
+	int myScore;
+	List<int> enemyScore = new List<int>();
 
 	// Use this for initialization
 	void Start () {
@@ -38,7 +38,6 @@ public class Global_Game_Controller : MonoBehaviour {
 			}
 		}
 
-		// increase map size over maps
 		if (PlayerPrefs.GetInt("current_level").ToString().Length == 0)
 			PlayerPrefs.SetInt("current_level", 1);
 		
@@ -62,20 +61,22 @@ public class Global_Game_Controller : MonoBehaviour {
         {
             if (h.tag == "gameover")
             {
-                h.toggle_gameover(myscore, enemyscore);
+                h.toggle_gameover(myScore, enemyScore);
                 break;
             }
         }
     }
 
-	void Update() {
-		if (remainingTime < 0 && gameRunning) {
-			foreach (Player a in FindObjectsOfType<Player>()) {
-				if (a.GetComponent<Player_Controller>().isActiveAndEnabled) {
-					myscore = a.killed;
-				} else {
-					enemyscore.Add(a.killed);
-				}
+	void Update()
+	{
+		if (remainingTime < 0 && gameRunning)
+		{
+			foreach (Player a in FindObjectsOfType<Player>())
+			{
+				if (a.GetComponent<Player_Controller>().isActiveAndEnabled)
+					myScore = a.died;
+				else
+					enemyScore.Add(a.died);
 				Destroy(a.gameObject);
 			}
 			StartCoroutine(gameover_wait());
