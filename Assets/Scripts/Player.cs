@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -17,29 +16,33 @@ public class Player : MonoBehaviour
     public int health = 100;
 
     public int died = 0;
-    //public bool respawning = false;
+    public bool respawning = false;
 
     private fade_script fade;
 
     public void update_label(POWERUPS powerup)
     {
-        switch (powerup)
-        {
-            case POWERUPS.LIFE:
-                life_label.text = health.ToString();
-                break;
+        try {
+            switch (powerup)
+            {
+                case POWERUPS.LIFE:
+                    life_label.text = health.ToString();
+                    break;
 
-            case POWERUPS.DIED:
-                died_label.text = died.ToString();
-                break;
+                case POWERUPS.DIED:
+                    died_label.text = died.ToString();
+                    break;
+            }
+        } catch (System.Exception e) {
+
         }
     }
 
-    /*IEnumerator respawn_wait()
+    IEnumerator respawn_wait()
     {
         yield return new WaitForSeconds(5);
         respawning = false;
-    }*/
+    }
 
     IEnumerator gameover_wait()
     {
@@ -116,7 +119,7 @@ public class Player : MonoBehaviour
             if (GetComponent<Player_Controller>().isActiveAndEnabled)
                 update_label(POWERUPS.LIFE);
 
-            if (health <= 0)
+            if (health == 0)
 			{
                 bool enemy = true;
                 if (GetComponent<Player_Controller>().isActiveAndEnabled)
@@ -132,14 +135,32 @@ public class Player : MonoBehaviour
                     Destroy(gameObject);
                     FindObjectOfType<Global_Game_Controller>().update_labels();
                 }*/
+                //Destroy(gameObject);
 
-                health = 100;
-                Destroy(gameObject);
-                FindObjectOfType<Global_Game_Controller>().GetComponent<Map>().generate_player(enemy);
-                
-                //respawning = true;
-                //StartCoroutine(respawn_wait());
                 Instantiate(Explosion, transform.position, Quaternion.identity);
+
+                respawning = true;
+                StartCoroutine(respawn_wait());
+                
+                health = 100;
+                update_label(POWERUPS.LIFE);
+                GetComponent<Player_Controller>().UpdateCaption("HP : " + health.ToString());
+                Map map = FindObjectOfType<Global_Game_Controller>().GetComponent<Map>();
+                int[] jj = { map.height - 2, map.height / 2 + (map.height % 2), 1 };
+                if (enemy)
+                {
+                    int i = map.width - 2;
+                    int j = jj[Random.Range(0, 3)];
+                    transform.position = new Vector3(i, 0, j);
+                    transform.rotation = Quaternion.identity;
+                }
+                else
+                {
+                    int i = 1;
+                    int j = jj[Random.Range(0, 3)];
+                    transform.position = new Vector3(i, 0, j);
+                    transform.rotation = Quaternion.identity;
+                }
             }
         }
     }

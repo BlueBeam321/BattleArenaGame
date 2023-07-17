@@ -43,7 +43,7 @@ public class Global_Game_Controller : MonoBehaviour {
 		
 		int level = 1;//PlayerPrefs.GetInt("current_level");
 		map =  gameObject.AddComponent<Map>();
-		map.construct(1 + level, 20, 20, map_parent);
+		map.construct(1 + 3, 20, 20, map_parent);
 
 		remainingTime = 5 * 60;
 		gameRunning = true;
